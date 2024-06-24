@@ -1,13 +1,13 @@
 # tyrell-assessment
 
 ## Answer A
-
+Run this docker command
 ```
 docker-compose up --build
 ```
 
-### Answer B
-Use EXISTS instead of LEFT JOIN
+## Answer B
+1. Use EXISTS instead of LEFT JOIN
 
 ~~~sql
 SELECT 
@@ -154,6 +154,45 @@ ORDER BY
     Jobs.sort_order DESC, 
     Jobs.id DESC 
 LIMIT 50 OFFSET 0;
-
 ~~~
 
+2. add INDEX
+~~~sql
+-- For Jobs
+CREATE INDEX idx_jobs_job_category_id ON jobs (job_category_id);
+CREATE INDEX idx_jobs_job_type_id ON jobs (job_type_id);
+CREATE INDEX idx_jobs_name ON jobs (name);
+CREATE INDEX idx_jobs_description ON jobs (description);
+CREATE INDEX idx_jobs_detail ON jobs (detail);
+CREATE INDEX idx_jobs_business_skill ON jobs (business_skill);
+CREATE INDEX idx_jobs_knowledge ON jobs (knowledge);
+CREATE INDEX idx_jobs_location ON jobs (location);
+CREATE INDEX idx_jobs_activity ON jobs (activity);
+CREATE INDEX idx_jobs_salary_statistic_group ON jobs (salary_statistic_group);
+CREATE INDEX idx_jobs_salary_range_remarks ON jobs (salary_range_remarks);
+CREATE INDEX idx_jobs_restriction ON jobs (restriction);
+CREATE INDEX idx_jobs_remarks ON jobs (remarks);
+CREATE INDEX idx_jobs_publish_status ON jobs (publish_status);
+CREATE INDEX idx_jobs_deleted ON jobs (deleted);
+
+-- For other tables condition
+CREATE INDEX idx_personalities_name ON personalities (name);
+CREATE INDEX idx_practical_skills_name ON practical_skills (name);
+CREATE INDEX idx_basic_abilities_name ON basic_abilities (name);
+CREATE INDEX idx_affiliates_name ON affiliates (name);
+CREATE INDEX idx_job_categories_deleted ON job_categories (deleted);
+CREATE INDEX idx_job_types_deleted ON job_types (deleted);
+CREATE INDEX idx_personalities_deleted ON personalities (deleted);
+CREATE INDEX idx_practical_skills_deleted ON practical_skills (deleted);
+CREATE INDEX idx_basic_abilities_deleted ON basic_abilities (deleted);
+CREATE INDEX idx_affiliates_deleted ON affiliates (deleted);
+
+-- For join condition
+CREATE INDEX idx_jobs_personalities_job_id ON jobs_personalities (job_id, personality_id);
+CREATE INDEX idx_jobs_practical_skills_job_id ON jobs_practical_skills (job_id, practical_skill_id);
+CREATE INDEX idx_jobs_basic_abilities_job_id ON jobs_basic_abilities (job_id, basic_ability_id);
+CREATE INDEX idx_jobs_tools_job_id ON jobs_tools (job_id, affiliate_id);
+CREATE INDEX idx_jobs_career_paths_job_id ON jobs_career_paths (job_id, affiliate_id);
+CREATE INDEX idx_jobs_rec_qualifications_job_id ON jobs_rec_qualifications (job_id, affiliate_id);
+CREATE INDEX idx_jobs_req_qualifications_job_id ON jobs_req_qualifications (job_id, affiliate_id);
+~~~
