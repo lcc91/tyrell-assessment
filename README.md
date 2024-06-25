@@ -5,6 +5,7 @@ Run this docker command
 ```
 docker-compose up --build
 ```
+And open `http://localhost/` in browser
 
 ## Answer B
 1. Use EXISTS instead of LEFT JOIN
